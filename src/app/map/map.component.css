@@ -1,0 +1,21 @@
+mgl-map {
+    height: 500px;
+}
+
+.marker {
+    background-image: url('../../assets/lamp.png');
+    background-size: cover;
+    width: var(--my-var);
+    height: var(--my-var);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .marker-damaged {
+    background-image: url('../../assets/lamp-red.png');
+    background-size: cover;
+    width: var(--my-var);
+    height: var(--my-var);
+    border-radius: 50%;
+    cursor: pointer;
+  }

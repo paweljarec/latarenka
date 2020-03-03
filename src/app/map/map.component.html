@@ -1,0 +1,37 @@
+<div style="padding: 50px;">
+  <mgl-map
+    [style]="'mapbox://styles/mapbox/streets-v9'"
+    [zoom]="[13]"
+    [center]="[21.473357677459717, 49.744935501921]"
+    (load)="mapLoad($event)"
+    >
+    <mgl-marker [lngLat]="[21.464420557022095,
+    49.74737234875042]">
+      <div (click)="clicked()" class="marker"></div>
+    </mgl-marker>
+    <mgl-marker [lngLat]="[  21.464763879776,
+    49.74725622867056]">
+      <div (click)="clicked()" class="marker"></div>
+    </mgl-marker>
+    <mgl-marker [lngLat]="[21.465176939964294,
+    49.747124510034546]">
+      <div (click)="clicked()" class="marker"></div>
+    </mgl-marker>
+    <mgl-marker [lngLat]="[21.465512216091156,
+    49.7470031899218]">
+      <div (click)="clicked()" class="marker"></div>
+    </mgl-marker>
+    <mgl-marker [lngLat]="[21.464273035526276,
+    49.74720076823584]">
+      <div (click)="clicked()" class="marker-damaged"></div>
+    </mgl-marker>
+    <mgl-marker [lngLat]="[21.46462708711624,
+    49.74707251573766]">
+      <div (click)="clicked()" class="marker"></div>
+    </mgl-marker>
+    <mgl-marker [lngLat]="[21.465007960796356,
+    49.74692346511107]">
+      <div (click)="clicked()" class="marker"></div>
+    </mgl-marker>
+  </mgl-map>
+</div>
