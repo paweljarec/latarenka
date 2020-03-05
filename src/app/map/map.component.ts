@@ -110,8 +110,8 @@ public geojson  = {
 
   ngOnInit() {}
 
-  public clicked() {
-    console.log('test');
+  public clicked(feature: any) {
+    console.log(feature);
     console.log(this.map);
   }
 
