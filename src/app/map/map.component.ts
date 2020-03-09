@@ -96,6 +96,7 @@ export class MapComponent implements OnInit {
 
   map: mapboxgl.Map;
   gmina: GeoJSON.FeatureCollection<GeoJSON.LineString>;
+  lanternNumber = '';
 
   constructor(private http: HttpClient) {}
 
@@ -111,6 +112,7 @@ export class MapComponent implements OnInit {
     console.log(feature);
     console.log(this.map);
     feature.properties.isDamaged = true;
+    this.lanternNumber =  feature.geometry.coordinates[0];
   }
 
   mapLoad(ee: any) {

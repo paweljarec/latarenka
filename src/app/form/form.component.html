@@ -1,5 +1,5 @@
 <!-- <mat-card> -->
-  <form class="form" [formGroup]="formGroup">
+  <form class="form" [formGroup]="formGroup" *ngIf="lanternNumber !== ''">
     <mat-form-field class="input-field">
       <mat-label>Imię</mat-label>
       <input matInput formControlName="name">
@@ -18,7 +18,7 @@
     </mat-form-field>
     <mat-form-field class="input-field">
       <mat-label>Numer latarnii</mat-label>
-      <input matInput value="17v463" disabled formControlName="lanternNumber">
+      <input matInput disabled value="{{lanternNumber}}" formControlName="lanternNumber">
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="formGroup.pristine || formGroup.invalid" type="submit" class="button">Wyślij zgłoszenie</button>
   </form>

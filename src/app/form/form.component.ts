@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -7,13 +7,14 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  @Input() lanternNumber;
+
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.createForm();
-
     // this.formGroup.get('name').setValue('test');
   }
 

@@ -35,7 +35,7 @@
       <div *ngIf="feature.properties.isDamaged; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
           <div
-          (click)="alert(feature)"
+          (click)="clicked(feature)"
           class="marker-damaged"
           >
           </div>
@@ -53,4 +53,4 @@
   </mgl-map>
 </div>
 
-<app-form></app-form>
+<app-form [lanternNumber]=lanternNumber></app-form>
