@@ -4,5 +4,7 @@
 
 
 body {
-    --my-var: 25px;
+    --my-var: 15px;
   }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

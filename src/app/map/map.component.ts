@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-map',
@@ -7,122 +8,126 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-public geojson  = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: true
+  public geojson = {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.391003131866455, 49.82077905815968]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.464420557022095,
-          49.74737234875042
-        ]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: false
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: true
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.39127403497696, 49.821237640961904]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.464763879776,
-          49.74725622867056
-        ]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: false
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.39104336500168, 49.82172736798523]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.465176939964294,
-          49.747124510034546
-        ]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: false
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.39028161764145, 49.82200943465698]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.465512216091156,
-          49.7470031899218
-        ]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: false
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.39022797346115, 49.821832926870904]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.464273035526276,
-          49.74720076823584
-        ]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: false
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.390737593173977, 49.82160623455397]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.46462708711624,
-          49.74707251573766
-        ]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {
-        isDamaged: false
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.390965580940247, 49.821254945888214]
+        }
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          21.465007960796356,
-          49.74692346511107
-        ]
+      {
+        type: 'Feature',
+        properties: {
+          isDamaged: false
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [21.390737593173977, 49.82083962594872]
+        }
       }
-    }
-  ]
-};
+    ]
+  };
 
   map: mapboxgl.Map;
+  gmina: GeoJSON.FeatureCollection<GeoJSON.LineString>;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.http
+      .get('assets/gmina-brzyska.txt', { responseType: 'text' })
+      .subscribe(data => {
+        this.gmina = JSON.parse(data);
+      });
+  }
 
   public clicked(feature: any) {
     console.log(feature);
     console.log(this.map);
+    feature.properties.isDamaged = true;
   }
 
   mapLoad(ee: any) {
     this.map = ee;
     this.map.setMaxZoom(18);
-    this.map.setMinZoom(13);
+    this.map.setMinZoom(11);
+
+    this.map.addSource('some id', {
+      type: 'geojson',
+      data: this.gmina
+    });
 
     this.map.on('zoom', (e: any) => {
       const iconSize = e.target.transform._zoom * 5 - 40;
-      document.querySelector('body').style.cssText = '--my-var:' + iconSize + 'px';
+      console.log(iconSize);
+      document.querySelector('body').style.cssText =
+        '--my-var:' + iconSize + 'px';
     });
   }
 }

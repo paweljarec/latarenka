@@ -2,6 +2,10 @@ mgl-map {
     height: 500px;
 }
 
+.main-map {
+  padding: 100px;
+}
+
 .marker {
     background-image: url('../../assets/lamp.png');
     background-size: cover;

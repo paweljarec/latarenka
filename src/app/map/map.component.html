@@ -1,9 +1,32 @@
-<div style="padding: 50px;">
+<div class="main-map">
   <mgl-map
     [style]="'mapbox://styles/mapbox/streets-v9'"
-    [zoom]="[13]"
-    [center]="[21.473357677459717, 49.744935501921]"
+    [zoom]="[11]"
+    [center]="[21.39042377471924, 49.82051428950597]"
     (load)="mapLoad($event)">
+
+
+    <mgl-geojson-source
+      *ngIf="gmina"
+      id="trace"
+      [data]="gmina"
+    >
+    </mgl-geojson-source>
+    <mgl-layer
+      *ngIf="gmina"
+      id="trace"
+      type="line"
+      source="trace"
+      [layout]="{
+        'line-join': 'round',
+        'line-cap': 'round'
+      }"
+      [paint]="{
+        'line-color': '#888',
+        'line-width': 4
+      }"
+    >
+    </mgl-layer>
 
     <mgl-marker
       *ngFor="let feature of geojson.features"
@@ -26,5 +49,8 @@
         </ng-template>
     </mgl-marker>
 
+
   </mgl-map>
 </div>
+
+<app-form></app-form>
