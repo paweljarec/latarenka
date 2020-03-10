@@ -123,6 +123,8 @@ export class MapComponent implements OnInit {
       data: this.gmina
     });
 
+    this.map.addControl(new mapboxgl.NavigationControl());
+
     this.map.on('zoom', (e: any) => {
       const iconSize = e.target.transform._zoom * 5 - 40;
       document.querySelector('body').style.cssText =
