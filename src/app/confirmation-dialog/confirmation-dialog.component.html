@@ -1,8 +1,11 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Wpisz kod otrzymany sms'em w celu potwierdzenia</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <mat-label>Kod sms</mat-label>
+    <input matInput autocomplete="off">
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+  <button mat-raised-button color="warn" (click)="onCloseClick()">Zamknij</button>
+  <button mat-raised-button color="primary" (click)="onConfirmClick()" cdkFocusInitial>Zgłoś</button>
 </div>
