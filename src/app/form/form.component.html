@@ -1,5 +1,5 @@
 <!-- <mat-card> -->
-  <form class="form" [formGroup]="formGroup" *ngIf="lanternNumber !== ''">
+  <form class="form" [formGroup]="formGroup" *ngIf="lanternNumber !== ''" (ngSubmit)="onSubmit()">
     <mat-form-field class="input-field">
       <mat-label>Imię</mat-label>
       <input matInput formControlName="name">

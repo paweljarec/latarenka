@@ -109,8 +109,6 @@ export class MapComponent implements OnInit {
   }
 
   public clicked(feature: any) {
-    console.log(feature);
-    console.log(this.map);
     feature.properties.isDamaged = true;
     this.lanternNumber =  feature.geometry.coordinates[0];
   }
@@ -127,7 +125,6 @@ export class MapComponent implements OnInit {
 
     this.map.on('zoom', (e: any) => {
       const iconSize = e.target.transform._zoom * 5 - 40;
-      console.log(iconSize);
       document.querySelector('body').style.cssText =
         '--my-var:' + iconSize + 'px';
     });
