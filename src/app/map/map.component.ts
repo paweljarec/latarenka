@@ -15,7 +15,11 @@ export class MapComponent implements OnInit {
   gmina: GeoJSON.FeatureCollection<GeoJSON.LineString>;
   lastFocusedLantern: any;
 
-  constructor(private http: HttpClient, private communicationService: ComunnicationService, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private communicationService: ComunnicationService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.http
@@ -29,7 +33,18 @@ export class MapComponent implements OnInit {
     this.communicationService.damagedLantern$.subscribe(lantern => {
       this.lastFocusedLantern.properties.isHighlighted = false;
       lantern.properties.isDamaged = true;
+    });
+
+    this.communicationService.flyToLocation$.subscribe(lanternCord => {
+      this.map.flyTo({
+        center: [
+          lanternCord.x,
+          lanternCord.y
+        ],
+        essential: true,
+        zoom: 18
       });
+    });
   }
 
   public clicked(feature: any) {
@@ -47,7 +62,7 @@ export class MapComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 3000,
+      duration: 3000
     });
   }
 
@@ -71,11 +86,11 @@ export class MapComponent implements OnInit {
 
     this.map.addControl(
       new mapboxgl.GeolocateControl({
-      positionOptions: {
-      enableHighAccuracy: true
-      },
-      trackUserLocation: true
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
       })
-      );
+    );
   }
 }

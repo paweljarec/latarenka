@@ -7,3 +7,15 @@
 .mat-table {
     width: 100%;
 }
+
+.green-icon {
+  color: green;
+}
+
+.red-icon {
+  color: red;
+}
+
+.action-button {
+  margin-right: 10px;
+}

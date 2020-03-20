@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +7,11 @@ import { first } from 'rxjs/operators';
 export class ComunnicationService {
   private focusedLantern = new BehaviorSubject<any>(null);
   private damagedLantern = new Subject<any>();
+  private flyToLocation = new Subject<any>();
 
   focusedLantern$ = this.focusedLantern.asObservable();
   damagedLantern$ = this.damagedLantern.asObservable();
+  flyToLocation$ = this.flyToLocation.asObservable();
 
   setLanternFocused(lanternNumber: string) {
     this.focusedLantern.next(lanternNumber);
@@ -18,6 +19,10 @@ export class ComunnicationService {
 
   setLanternDamaged(lanternNumber: string) {
     this.damagedLantern.next(lanternNumber);
+  }
+
+  setFlyToLocation(lanternCord: any) {
+    this.flyToLocation.next(lanternCord);
   }
 
   // tslint:disable-next-line: member-ordering
