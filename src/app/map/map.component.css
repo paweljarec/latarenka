@@ -23,3 +23,12 @@ mgl-map {
     border-radius: 50%;
     cursor: pointer;
   }
+
+  .marker-highlighted {
+    background-image: url('../../assets/lamp-highlighted.png');
+    background-size: cover;
+    width: var(--my-var);
+    height: var(--my-var);
+    border-radius: 50%;
+    cursor: pointer;
+  }

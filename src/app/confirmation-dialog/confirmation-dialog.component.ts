@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ComunnicationService } from '../services/comunnication.service';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -8,10 +9,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./confirmation-dialog.component.css']
 })
 export class ConfirmationDialogComponent implements OnInit {
+  private focusedLantern: any;
 
-  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>, private snackBar: MatSnackBar) { }
+  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>, private snackBar: MatSnackBar,
+              private communicationService: ComunnicationService) { }
 
   ngOnInit() {
+    this.communicationService.focusedLantern$.subscribe(lantern => {
+      this.focusedLantern = lantern;
+    });
   }
 
   onCloseClick(): void {
@@ -19,6 +25,8 @@ export class ConfirmationDialogComponent implements OnInit {
   }
 
   onConfirmClick(): void {
+    this.communicationService.setLanternDamaged(this.focusedLantern);
+
     this.openSnackBar('Zgłoszenie zostało wysłane', null);
     this.dialogRef.close();
   }

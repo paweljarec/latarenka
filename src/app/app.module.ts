@@ -11,13 +11,15 @@ import { MapComponent } from './map/map.component';
 import { MaterialModule } from './material-module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { AdminTableComponent } from './admin-table/admin-table.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       MapComponent,
       FormComponent,
-      ConfirmationDialogComponent
+      ConfirmationDialogComponent,
+      AdminTableComponent
    ],
    imports: [
       HttpClientModule,
@@ -30,7 +32,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
         accessToken: 'pk.eyJ1IjoiamFyb3RoZXBybyIsImEiOiJjazc5N3Zqb3IwN21pM2ZyenkxbWV6MGZoIn0.HF-Hehvh2miXrHH4qqqdIw'
         // geocoderAccessToken: 'TOKEN'
       }),
-    MaterialModule
+      MaterialModule
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [],

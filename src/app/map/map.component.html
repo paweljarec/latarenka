@@ -32,7 +32,7 @@
       *ngFor="let feature of geojson.features"
       [feature]="feature"
     >
-      <div *ngIf="feature.properties.isDamaged; then thenBlock else elseBlock"></div>
+      <!-- <div *ngIf="feature.properties.isDamaged; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
           <div
           (click)="clicked(feature)"
@@ -46,11 +46,34 @@
           class="marker"
           >
           </div>
+        </ng-template> -->
+
+        <ng-template [ngIf]="feature.properties.isDamaged">          
+          <div
+          (click)="clickedDamaged()"
+          class="marker-damaged"
+          >
+          </div>
         </ng-template>
+        <ng-template [ngIf]="feature.properties.isHighlighted">
+          <div
+          (click)="clicked(feature)"
+          class="marker-highlighted"
+          >
+          </div>
+        </ng-template>
+        <ng-template [ngIf]="!feature.properties.isDamaged && !feature.properties.isHighlighted">
+          <div
+          (click)="clicked(feature)"
+          class="marker"
+          >
+          </div>
+        </ng-template>
+
     </mgl-marker>
-
-
   </mgl-map>
 </div>
 
-<app-form [lanternNumber]=lanternNumber></app-form>
+<app-form></app-form>
+
+<app-admin-table></app-admin-table>

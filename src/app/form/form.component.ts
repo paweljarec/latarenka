@@ -1,23 +1,46 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ComunnicationService } from './../services/comunnication.service';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent implements OnInit {
-  @Input() lanternNumber;
-
+export class FormComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
+  lanternNumber: string;
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) { }
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    private comunnicationService: ComunnicationService
+  ) {}
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subs => subs.unsubscribe());
+  }
 
   ngOnInit() {
+    this.lanternNumber = '';
     this.createForm();
-    // this.formGroup.get('name').setValue('test');
+    this.subscriptions.push(
+      this.comunnicationService.focusedLantern$.subscribe(lantern => {
+        if (lantern) {
+          this.lanternNumber = lantern.geometry.coordinates[0];
+        }
+      })
+    );
   }
 
   createForm() {
@@ -28,7 +51,7 @@ export class FormComponent implements OnInit {
       surname: [null, [Validators.required, Validators.minLength(3)]],
       contactNumber: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.pattern(emailregex)]],
-      lanternNumber: [{value: null, disabled: true}, [Validators.required]],
+      lanternNumber: [{ value: null, disabled: true }, [Validators.required]],
       validate: ''
     });
   }
@@ -40,11 +63,6 @@ export class FormComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px'
-      // data: {name: this.name, animal: this.animal}
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
   }
 }

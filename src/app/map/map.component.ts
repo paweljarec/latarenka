@@ -1,6 +1,8 @@
+import { ComunnicationService } from './../services/comunnication.service';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +16,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -24,7 +27,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: true
+          isDamaged: true,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -34,7 +38,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -44,7 +49,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -54,7 +60,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -64,7 +71,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -74,7 +82,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -84,7 +93,8 @@ export class MapComponent implements OnInit {
       {
         type: 'Feature',
         properties: {
-          isDamaged: false
+          isDamaged: false,
+          isHighlighted: false
         },
         geometry: {
           type: 'Point',
@@ -96,9 +106,9 @@ export class MapComponent implements OnInit {
 
   map: mapboxgl.Map;
   gmina: GeoJSON.FeatureCollection<GeoJSON.LineString>;
-  lanternNumber = '';
+  lastFocusedLantern: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private communicationService: ComunnicationService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.http
@@ -106,11 +116,30 @@ export class MapComponent implements OnInit {
       .subscribe(data => {
         this.gmina = JSON.parse(data);
       });
+
+    this.communicationService.damagedLantern$.subscribe(lantern => {
+      this.lastFocusedLantern.properties.isHighlighted = false;
+      lantern.properties.isDamaged = true;
+      });
   }
 
   public clicked(feature: any) {
-    feature.properties.isDamaged = true;
-    this.lanternNumber =  feature.geometry.coordinates[0];
+    if (this.lastFocusedLantern) {
+      this.lastFocusedLantern.properties.isHighlighted = false;
+    }
+    this.communicationService.setLanternFocused(feature);
+    feature.properties.isHighlighted = true;
+    this.lastFocusedLantern = feature;
+  }
+
+  public clickedDamaged() {
+    this.openSnackBar('Ta latarnia została już zgłoszona!', null);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 
   mapLoad(ee: any) {
@@ -130,5 +159,14 @@ export class MapComponent implements OnInit {
       document.querySelector('body').style.cssText =
         '--my-var:' + iconSize + 'px';
     });
+
+    this.map.addControl(
+      new mapboxgl.GeolocateControl({
+      positionOptions: {
+      enableHighAccuracy: true
+      },
+      trackUserLocation: true
+      })
+      );
   }
 }
