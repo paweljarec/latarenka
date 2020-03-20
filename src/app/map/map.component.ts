@@ -10,100 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  public geojson = {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.391003131866455, 49.82077905815968]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: true,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.39127403497696, 49.821237640961904]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.39104336500168, 49.82172736798523]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.39028161764145, 49.82200943465698]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.39022797346115, 49.821832926870904]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.390737593173977, 49.82160623455397]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.390965580940247, 49.821254945888214]
-        }
-      },
-      {
-        type: 'Feature',
-        properties: {
-          isDamaged: false,
-          isHighlighted: false
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [21.390737593173977, 49.82083962594872]
-        }
-      }
-    ]
-  };
-
+  public geojson: any;
   map: mapboxgl.Map;
   gmina: GeoJSON.FeatureCollection<GeoJSON.LineString>;
   lastFocusedLantern: any;
@@ -116,6 +23,8 @@ export class MapComponent implements OnInit {
       .subscribe(data => {
         this.gmina = JSON.parse(data);
       });
+
+    this.geojson = this.communicationService.lanterns;
 
     this.communicationService.damagedLantern$.subscribe(lantern => {
       this.lastFocusedLantern.properties.isHighlighted = false;
