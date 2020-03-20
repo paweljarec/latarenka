@@ -12,6 +12,7 @@ import { MaterialModule } from './material-module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { AdminTableComponent } from './admin-table/admin-table.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 @NgModule({
    declarations: [
@@ -19,7 +20,8 @@ import { AdminTableComponent } from './admin-table/admin-table.component';
       MapComponent,
       FormComponent,
       ConfirmationDialogComponent,
-      AdminTableComponent
+      AdminTableComponent,
+      AdminPageComponent
    ],
    imports: [
       HttpClientModule,
