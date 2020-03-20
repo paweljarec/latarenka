@@ -3,9 +3,11 @@ import { ComunnicationService } from '../services/comunnication.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-export interface LanternCord {
+export interface LanternData {
   x: number;
   y: number;
+  notificatedBy: string;
+  contactNumber: string;
 }
 
 @Component({
@@ -14,8 +16,8 @@ export interface LanternCord {
   styleUrls: ['./admin-table.component.css']
 })
 export class AdminTableComponent implements OnInit {
-  displayedColumns: string[] = ['x', 'y', 'actions'];
-  dataSource = new MatTableDataSource<LanternCord>([]);
+  displayedColumns: string[] = ['x', 'y', 'notificatedBy', 'contactNumber',  'actions'];
+  dataSource = new MatTableDataSource<LanternData>([]);
 
   constructor(
     private communicationService: ComunnicationService,
@@ -27,7 +29,9 @@ export class AdminTableComponent implements OnInit {
       .filter(lantern => lantern.properties.isDamaged)
       .map(lantern => ({
         x: lantern.geometry.coordinates[0],
-        y: lantern.geometry.coordinates[1]
+        y: lantern.geometry.coordinates[1],
+        notificatedBy: lantern.properties.notificatedBy,
+        contactNumber: lantern.properties.contactNumber
       }));
 
     this.communicationService.damagedLantern$.subscribe(lantern => {
@@ -35,13 +39,15 @@ export class AdminTableComponent implements OnInit {
         ...this.dataSource.data,
         {
           x: lantern.geometry.coordinates[0],
-          y: lantern.geometry.coordinates[1]
+          y: lantern.geometry.coordinates[1],
+          notificatedBy: lantern.properties.notificatedBy,
+          contactNumber: lantern.properties.contactNumber
         }
       ];
     });
   }
 
-  public fixed(lantern: LanternCord) {
+  public fixed(lantern: LanternData) {
     this.communicationService.lanterns.features.filter(
       x => x.geometry.coordinates[0] === lantern.x
     )[0].properties.isDamaged = false;
@@ -53,7 +59,7 @@ export class AdminTableComponent implements OnInit {
     this.openSnackBar('Zgłoszenie zostało naprawione', null);
   }
 
-  public notDamaged(lantern: LanternCord) {
+  public notDamaged(lantern: LanternData) {
     // dodatkowa logika blokujaca użytkownika który zgłosił lampe
     this.communicationService.lanterns.features.filter(
       x => x.geometry.coordinates[0] === lantern.x
@@ -66,7 +72,7 @@ export class AdminTableComponent implements OnInit {
     this.openSnackBar('Użytkownik został zablokowany na 24h', null);
   }
 
-  public zoomToPoint(lantern: LanternCord) {
+  public zoomToPoint(lantern: LanternData) {
     this.communicationService.setFlyToLocation(lantern);
   }
 

@@ -33,6 +33,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
@@ -44,6 +46,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: true,
+          notificatedBy: 'Jan Kowalski',
+          contactNumber: '525352352',
           isHighlighted: false
         },
         geometry: {
@@ -55,6 +59,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
@@ -66,6 +72,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
@@ -77,6 +85,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
@@ -88,6 +98,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
@@ -99,6 +111,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
@@ -110,6 +124,8 @@ export class ComunnicationService {
         type: 'Feature',
         properties: {
           isDamaged: false,
+          notificatedBy: null,
+          contactNumber: null,
           isHighlighted: false
         },
         geometry: {
